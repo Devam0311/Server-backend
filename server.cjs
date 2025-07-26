@@ -2,9 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
-const session = require('express-session');
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const https = require('https');
 const fs = require('fs');
 const { execFile } = require('child_process');
@@ -47,15 +44,6 @@ if (!fs.existsSync(profilesDir)) {
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
-
-// --- SESSION & PASSPORT SETUP ---
-app.use(session({
-  secret: 'Overflow+highschooldxd',
-  resave: false,
-  saveUninitialized: true,
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 
 // --- CORS & FILE UPLOADS ---
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
