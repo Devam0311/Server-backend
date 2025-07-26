@@ -217,10 +217,7 @@ const catalogueDir = path.join(__dirname, 'catalogue');
 app.use('/catalogue', express.static(catalogueDir));
 
 const PORT = 3001;
-const httpsOptions = {
-  key: fs.readFileSync('./certs/localhost-key.pem'),
-  cert: fs.readFileSync('./certs/localhost.pem'),
-};
-https.createServer(httpsOptions, app).listen(PORT, () => {
-  console.log(`API server running on https://localhost:${PORT}`);
+// Convert HTTPS server to HTTP
+app.listen(PORT, () => {
+  console.log(`API server running on http://localhost:${PORT}`);
 }); 
