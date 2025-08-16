@@ -3,8 +3,8 @@ services:
     name: 8x-sports-backend
     env: node
     plan: free
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: pnpm install --prod
+    startCommand: pnpm start
     envVars:
       - key: NODE_ENV
         value: production

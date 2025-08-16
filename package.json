@@ -16,7 +16,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "clean": "rm -rf dist node_modules/.vite",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "echo 'Skipping build step for production deployment'"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.0.0",
