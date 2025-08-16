@@ -204,7 +204,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const catalogueDir = path.join(__dirname, 'catalogue');
 app.use('/catalogue', express.static(catalogueDir));
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 // Convert HTTPS server to HTTP
 app.listen(PORT, () => {
   console.log(`API server running on http://localhost:${PORT}`);
