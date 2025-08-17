@@ -163,6 +163,7 @@ async function extractDINOFeatures(imagePath) {
     headers: form.getHeaders(),
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
+    timeout: 300000, // 5 minutes timeout
   });
   
   return response.data.features;
@@ -175,6 +176,8 @@ async function searchFAISS(features: any) {
 
   const response = await axios.post(process.env.FASTAPI_FAISS_URL as string, {
     features: features
+  }, {
+    timeout: 300000, // 5 minutes timeout
   });
 
   return response.data.results;

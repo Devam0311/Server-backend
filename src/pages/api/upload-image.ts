@@ -57,6 +57,7 @@ export default async function handler(req, res) {
       headers: formData.getHeaders(),
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
+      timeout: 300000, // 5 minutes timeout
     });
     
     const polygons = response.data.polygons;
