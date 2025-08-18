@@ -7,6 +7,9 @@ import fs from 'fs';
 import sharp from 'sharp';
 import axios from 'axios';
 import FormData from 'form-data';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 export const config = {
   api: {
@@ -151,22 +154,31 @@ async function extractMaxRectangle(imagePath, area, isPolygon) {
 async function extractDINOFeatures(imagePath) {
   const form = new FormData();
   form.append('file', fs.createReadStream(imagePath));
-  
-  const response = await axios.post('http://0.0.0.0:8000/dino', form, {
+
+  if (!process.env.FASTAPI_DINO_URL) {
+    throw new Error('FASTAPI_DINO_URL environment variable is not set');
+  }
+
+  const response = await axios.post(process.env.FASTAPI_DINO_URL as string, form, {
     headers: form.getHeaders(),
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
+    timeout: 300000, // 5 minutes timeout
   });
   
   return response.data.features;
 }
 
-async function searchFAISS(features) {
-  const response = await axios.post('http://0.0.0.0:8000/faiss', {
+async function searchFAISS(features: any) {
+  if (!process.env.FASTAPI_FAISS_URL) {
+    throw new Error('FASTAPI_FAISS_URL environment variable is not set');
+  }
+
+  const response = await axios.post(process.env.FASTAPI_FAISS_URL as string, {
     features: features
+  }, {
+    timeout: 300000, // 5 minutes timeout
   });
-  
+
   return response.data.results;
 }
-
- 

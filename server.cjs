@@ -49,16 +49,6 @@ if (!fs.existsSync(uploadsDir)) {
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 
 // --- API ENDPOINTS ---
-
-// Test endpoint to verify server is working
-app.get('/api/test', (req, res) => {
-  res.json({ 
-    message: 'Server is working!', 
-    timestamp: new Date().toISOString(),
-    endpoints: ['/api/upload-image', '/api/generate-jersey', '/api/test']
-  });
-});
-
 app.post('/api/upload-image', upload.single('image'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ 

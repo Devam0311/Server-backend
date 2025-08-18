@@ -8,6 +8,9 @@ import fs from 'fs';
 import sharp from 'sharp';
 import axios from 'axios';
 import FormData from 'form-data';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 export const config = {
   api: {
@@ -43,13 +46,18 @@ export default async function handler(req, res) {
     await sharp(imagePath).resize(200, 200).toFile(resizedPath);
 
     // Send the image to FastAPI YOLO endpoint
+    if (!process.env.FASTAPI_YOLO_URL) {
+      return res.status(500).json({ error: 'FASTAPI_YOLO_URL environment variable not configured' });
+    }
+    
     const formData = new FormData();
     formData.append('file', fs.createReadStream(resizedPath));
     
-    const response = await axios.post('http://0.0.0.0:8000/yolo', formData, {
+    const response = await axios.post(process.env.FASTAPI_YOLO_URL, formData, {
       headers: formData.getHeaders(),
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
+      timeout: 300000, // 5 minutes timeout
     });
     
     const polygons = response.data.polygons;
