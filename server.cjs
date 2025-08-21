@@ -46,7 +46,10 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // --- CORS & FILE UPLOADS ---
-app.use(cors({ origin: [process.env.FRONTEND_URL, process.env.FASTAPI_YOLO_URL, process.env.FASTAPI_DINO_URL, process.env.FASTAPI_FAISS_URL], methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
+app.use(cors({ origin: 
+  [process.env.FRONTEND_URL, process.env.FASTAPI_YOLO_URL, process.env.FASTAPI_DINO_URL, process.env.FASTAPI_FAISS_URL], 
+  methods: ["GET", "POST", "PUT", "DELETE"], 
+  credentials: true }));
 
 // --- API ENDPOINTS ---
 app.post('/api/upload-image', upload.single('image'), async (req, res) => {
